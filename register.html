@@ -1,0 +1,11 @@
+<!doctype html><html><head><base target="_top"><?!= include('styles'); ?></head><body><div class="wrap">
+<div class="hero"><div class="gold">มีสุข</div><h1>ลงทะเบียนเข้าร่วมงาน</h1><p>รับจัดงานบุญ ครบวงจร</p></div>
+<div class="card" id="formCard"><h2>ข้อมูลผู้เข้าร่วมงาน</h2>
+<div class="field"><label>ชื่อ–นามสกุล *</label><input id="name"></div><div class="field"><label>เบอร์โทรศัพท์ *</label><input id="phone" inputmode="tel"></div>
+<div class="field"><label>หน่วยงาน / กลุ่ม</label><input id="group"></div><div class="field"><label>จำนวนผู้ติดตาม</label><input id="guests" type="number" min="0" value="0"></div>
+<div class="field"><label>ประเภทแขก</label><select id="guestType"><option>แขกทั่วไป</option><option>VIP</option><option>เจ้าภาพ</option><option>STAFF</option></select></div>
+<div class="field"><label>หมายเหตุ</label><textarea id="note"></textarea></div><button onclick="submitForm()">ลงทะเบียนเข้าร่วมงาน</button></div>
+<div class="card" id="done" style="display:none;text-align:center"><h2>✓ ลงทะเบียนสำเร็จ</h2><p id="who"></p><div class="id" id="rid"></div><div id="qr" style="margin:18px auto"></div><p class="muted">กรุณาบันทึกหน้าจอนี้และแสดง QR Code ต่อเจ้าหน้าที่ในวันงาน</p></div>
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script>
+function v(id){return document.getElementById(id).value}function submitForm(){const b=document.querySelector('button');b.disabled=true;b.textContent='กำลังบันทึก...';google.script.run.withSuccessHandler(r=>{document.getElementById('formCard').style.display='none';document.getElementById('done').style.display='block';document.getElementById('who').textContent=r.name;document.getElementById('rid').textContent=r.id;new QRCode(document.getElementById('qr'),{text:r.token,width:220,height:220});}).withFailureHandler(e=>{alert(e.message);b.disabled=false;b.textContent='ลงทะเบียนเข้าร่วมงาน'}).registerGuest({name:v('name'),phone:v('phone'),group:v('group'),guests:v('guests'),guestType:v('guestType'),note:v('note')})}
+</script></body></html>
